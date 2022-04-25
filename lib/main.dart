@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/transaction_list.dart';
 import 'new_transaction.dart';
 
 void main() => runApp(AppHomePage());
@@ -63,22 +64,7 @@ class _AppState extends State<App> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              width: double.infinity,
-              height: 100,
-              child: Card(
-                child: Center(
-                  child: Text('Image'),
-                ),
-                elevation: 10,
-              ),
-            ),
-            Text(
-              'No transaction is added yet.Please add by pressing + icon below.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
+            TransactionList()
           ],
         ),
       ),
