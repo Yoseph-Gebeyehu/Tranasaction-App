@@ -29,7 +29,7 @@ class _TransactionListState extends State<TransactionList> {
               Text(
                 'No transaction is added yet.Please add by pressing + icon below.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ],
           )
@@ -41,11 +41,16 @@ class _TransactionListState extends State<TransactionList> {
                   leading: CircleAvatar(
                     radius: 30,
                     child: Text(
-                      tx.amount.toString(),
+                      '\$${tx.amount}',
                     ),
                   ),
-                  title: Text(tx.title),
-                  subtitle: Text(tx.date.toString()),
+                  title: Text(
+                    tx.title,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  subtitle: Text(
+                    DateFormat.yMMMd().format(tx.date).toString(),
+                  ),
                   trailing: IconButton(
                     icon: Icon(
                       Icons.delete,

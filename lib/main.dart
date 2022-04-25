@@ -11,6 +11,37 @@ class AppHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontFamily: 'QuickSand',
+            ),
+          ),
+        ),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontFamily: 'QuickSand',
+            fontSize: 20,
+            color: Colors.black,
+          ),
+          headline2: TextStyle(
+            fontFamily: 'QuickSand',
+            fontSize: 18,
+            color: Colors.blue,
+          ),
+          button: TextStyle(
+            fontFamily: 'QuickSand',
+            fontSize: 18,
+            color: Colors.white,
+          ),
+          headline4: TextStyle(
+            fontFamily: 'QuickSand',
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       title: 'Transaction App',
       home: App(),
@@ -62,8 +93,11 @@ class _AppState extends State<App> {
             icon: Icon(Icons.add),
           ),
         ],
-        title: Text(
-          'Personal Expenses',
+        title: Center(
+          child: Text(
+            'Personal Expenses',
+            style: Theme.of(context).appBarTheme.textTheme.headline1,
+          ),
         ),
       ),
       body: SingleChildScrollView(
