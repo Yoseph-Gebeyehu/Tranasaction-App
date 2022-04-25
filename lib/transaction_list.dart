@@ -4,22 +4,21 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatefulWidget {
   // const TransactionList({ Key? key }) : super(key: key);
+  final List<Transaction> _transaction;
+  TransactionList(this._transaction);
 
   @override
   State<TransactionList> createState() => _TransactionListState();
 }
 
 class _TransactionListState extends State<TransactionList> {
-  List<Transaction> _transaction = [
-    // Transaction(title: 'Car', amount: 34, id: '1', date: DateTime.now()),
-  ];
   @override
   Widget build(BuildContext context) {
-    return _transaction.isEmpty
+    return widget._transaction.isEmpty
         ? Column(
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 10,top: 10),
+                margin: EdgeInsets.only(bottom: 10, top: 10),
                 width: double.infinity,
                 height: 210,
                 child: Image.asset(
@@ -35,7 +34,7 @@ class _TransactionListState extends State<TransactionList> {
             ],
           )
         : Column(
-            children: _transaction.map((tx) {
+            children: widget._transaction.map((tx) {
               return Card(
                 elevation: 10,
                 child: ListTile(

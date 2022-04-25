@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/transaction_list.dart';
+import '/transaction_list.dart';
 import 'new_transaction.dart';
+import 'transaction.dart';
 
 void main() => runApp(AppHomePage());
 
@@ -25,11 +26,27 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  List<Transaction> _transaction = [
+    // Transaction(title: 'Car', amount: 34, id: '1', date: DateTime.now()),
+  ];
+
+  void addTransaction(titleTx, amountTx, dateTx) {
+    final addTx = Transaction(
+      title: titleTx,
+      amount: amountTx,
+      id: DateTime.now().toString(),
+      date: dateTx,
+    );
+    setState(() {
+      _transaction.add(addTx);
+    });
+  }
+
   void startAddingNewTransaction() {
     showModalBottomSheet(
         context: context,
         builder: (_) {
-          return NewTransaction();
+          return NewTransaction(addTransaction);
         });
   }
 
@@ -64,7 +81,7 @@ class _AppState extends State<App> {
                 ),
               ),
             ),
-            TransactionList()
+            TransactionList(_transaction),
           ],
         ),
       ),
