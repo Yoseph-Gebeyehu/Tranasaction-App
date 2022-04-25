@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'new_transaction.dart';
 
 void main() => runApp(AppHomePage());
 
@@ -25,13 +24,23 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  void startAddingNewTransaction() {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return NewTransaction();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              startAddingNewTransaction();
+            },
             icon: Icon(Icons.add),
           ),
         ],
@@ -39,37 +48,39 @@ class _AppState extends State<App> {
           'Personal Expenses',
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: 100,
-            width: double.infinity,
-            child: Card(
-              elevation: 10,
-              child: Center(
-                child: Text(
-                  'Expenses Chart',
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 100,
+              width: double.infinity,
+              child: Card(
+                elevation: 10,
+                child: Center(
+                  child: Text(
+                    'Expenses Chart',
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 20,bottom: 20),
-            width: double.infinity,
-            height: 100,
-            child: Card(
-              child: Center(
-                child: Text('Image'),
+            Container(
+              margin: EdgeInsets.only(top: 20, bottom: 20),
+              width: double.infinity,
+              height: 100,
+              child: Card(
+                child: Center(
+                  child: Text('Image'),
+                ),
+                elevation: 10,
               ),
-              elevation: 10,
             ),
-          ),
-          Text(
-            'No transaction is added yet.Please add by pressing + icon below.',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20),
-          ),
-        ],
+            Text(
+              'No transaction is added yet.Please add by pressing + icon below.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
@@ -79,7 +90,9 @@ class _AppState extends State<App> {
             color: Colors.white,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          startAddingNewTransaction();
+        },
       ),
     );
   }
