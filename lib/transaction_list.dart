@@ -42,6 +42,7 @@ class _TransactionListState extends State<TransactionList> {
                     radius: 30,
                     child: Text(
                       '\$${tx.amount}',
+                      style: Theme.of(context).textTheme.button,
                     ),
                   ),
                   title: Text(

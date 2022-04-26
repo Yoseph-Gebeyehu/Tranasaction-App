@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/chart.dart';
 import '/transaction_list.dart';
 import 'new_transaction.dart';
 import 'transaction.dart';
@@ -106,14 +107,7 @@ class _AppState extends State<App> {
             Container(
               height: 100,
               width: double.infinity,
-              child: Card(
-                elevation: 10,
-                child: Center(
-                  child: Text(
-                    'Expenses Chart',
-                  ),
-                ),
-              ),
+              child: Chart(_transaction),
             ),
             TransactionList(_transaction),
           ],
