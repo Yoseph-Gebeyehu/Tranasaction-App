@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '/transaction.dart';
 
-class Chart extends StatelessWidget {
+class Chart extends StatefulWidget {
   // const Chart({ Key? key }) : super(key: key);
   final List<Transaction> _recentTransaction;
   Chart(this._recentTransaction);
+
+  @override
+  State<Chart> createState() => _ChartState();
+}
+
+class _ChartState extends State<Chart> {
   List<Map<String, Object>> get getList {
     return List.generate(7, (index) {
       DateTime dayOfWeek = DateTime.now().subtract(Duration(days: index));
-      double amount;
-      for (int i = 0; i < _recentTransaction.length; i++) {
-        if (_recentTransaction[i].date.day == dayOfWeek.day &&
-            _recentTransaction[i].date.month == dayOfWeek.month &&
-            _recentTransaction[i].date.year == dayOfWeek.year) {
-          amount = _recentTransaction[i].amount;
+      double amount = 0;
+      for (int i = 0; i < widget._recentTransaction.length; i++) {
+        if (widget._recentTransaction[i].date.day == dayOfWeek.day &&
+            widget._recentTransaction[i].date.month == dayOfWeek.month &&
+            widget._recentTransaction[i].date.year == dayOfWeek.year) {
+         setState(() {
+            amount += widget._recentTransaction[i].amount;
+         });
         }
       }
       ;
@@ -31,16 +39,17 @@ class Chart extends StatelessWidget {
         children: getList.map((tx) {
           return Column(
             children: [
-              Text(tx['amount'].toString()),
+              tx['amount'] == null
+                  ? Text('\$${'0'}',style: Theme.of(context).textTheme.headline5,)
+                  : Text('\$${tx['amount'].toString()}',style: Theme.of(context).textTheme.headline5,),
               SizedBox(
-                height: 50,
+                height: 40,
               ),
-              Text(tx['day'].toString()),
+              Text(tx['day'].toString(),style: Theme.of(context).textTheme.headline2,),
             ],
           );
         }).toList(),
       ),
     );
-    
   }
 }

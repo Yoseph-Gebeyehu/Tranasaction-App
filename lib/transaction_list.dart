@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 class TransactionList extends StatefulWidget {
   // const TransactionList({ Key? key }) : super(key: key);
   final List<Transaction> _transaction;
-  TransactionList(this._transaction);
+  final Function deleteTx;
+  TransactionList(this._transaction,this.deleteTx);
 
   @override
   State<TransactionList> createState() => _TransactionListState();
@@ -57,7 +58,9 @@ class _TransactionListState extends State<TransactionList> {
                       Icons.delete,
                       color: Colors.red,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.deleteTx(tx.id);
+                    },
                   ),
                 ),
               );

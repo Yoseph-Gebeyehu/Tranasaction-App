@@ -41,6 +41,11 @@ class AppHomePage extends StatelessWidget {
             fontSize: 16,
             color: Colors.black,
           ),
+          headline5: TextStyle(
+            fontFamily: 'QuickSand',
+            fontSize: 16,
+            color: Colors.blue,
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,
@@ -82,6 +87,14 @@ class _AppState extends State<App> {
         });
   }
 
+  void deleteTx(String id) {
+    setState(() {
+      _transaction.removeWhere((element) {
+        return element.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +122,7 @@ class _AppState extends State<App> {
               width: double.infinity,
               child: Chart(_transaction),
             ),
-            TransactionList(_transaction),
+            TransactionList(_transaction,deleteTx),
           ],
         ),
       ),
