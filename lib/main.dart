@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/chart.dart';
+import '/chart.dart';
 import '/transaction_list.dart';
 import 'new_transaction.dart';
 import 'transaction.dart';
@@ -63,9 +63,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  List<Transaction> _transaction = [
-    // Transaction(title: 'Car', amount: 34, id: '1', date: DateTime.now()),
-  ];
+  List<Transaction> _transaction = [];
 
   void addTransaction(titleTx, amountTx, dateTx) {
     final addTx = Transaction(
@@ -95,34 +93,99 @@ class _AppState extends State<App> {
     });
   }
 
+  bool _showChart = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              startAddingNewTransaction();
-            },
-            icon: Icon(Icons.add),
-          ),
-        ],
-        title: Center(
-          child: Text(
-            'Personal Expenses',
-            style: Theme.of(context).appBarTheme.textTheme.headline1,
-          ),
+    final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final landscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final AppBar appBar = AppBar(
+      actions: [
+        IconButton(
+          onPressed: () {
+            startAddingNewTransaction();
+          },
+          icon: Icon(Icons.add),
+        ),
+      ],
+      title: Center(
+        child: Text(
+          'Personal Expenses',
+          style: Theme.of(context).appBarTheme.textTheme.headline1,
         ),
       ),
+    );
+    final appBarHeight = appBar.preferredSize.height;
+    final portraitView = Column(
+      children: [
+        Container(
+          height: (mediaQueryHeight -
+                  appBarHeight -
+                  MediaQuery.of(context).padding.top) *
+              0.2,
+          width: double.infinity,
+          child: Chart(_transaction),
+        ),
+        Container(
+          height: (mediaQueryHeight -
+                  appBarHeight -
+                  MediaQuery.of(context).padding.top) *
+              0.7,
+          child: TransactionList(_transaction, deleteTx),
+        ),
+      ],
+    );
+    final landscapeView = Column(
+      children: [
+        Container(
+          height: (mediaQueryHeight -
+                  appBarHeight -
+                  MediaQuery.of(context).padding.top) *
+              0.2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Show chart',
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              Switch(
+                  value: _showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  }),
+            ],
+          ),
+        ),
+        _showChart
+            ? Container(
+                height: (mediaQueryHeight -
+                        appBarHeight -
+                        MediaQuery.of(context).padding.top) *
+                    0.8,
+                width: double.infinity,
+                child: Chart(_transaction),
+              )
+            : Container(
+                height: (mediaQueryHeight -
+                        appBarHeight -
+                        MediaQuery.of(context).padding.top) *
+                    0.8,
+                child: TransactionList(_transaction, deleteTx),
+              ),
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              height: 100,
-              width: double.infinity,
-              child: Chart(_transaction),
-            ),
-            TransactionList(_transaction,deleteTx),
+            if (landscape) landscapeView,
+            if (portrait) portraitView,
           ],
         ),
       ),

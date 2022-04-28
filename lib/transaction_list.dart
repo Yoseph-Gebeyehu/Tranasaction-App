@@ -6,7 +6,7 @@ class TransactionList extends StatefulWidget {
   // const TransactionList({ Key? key }) : super(key: key);
   final List<Transaction> _transaction;
   final Function deleteTx;
-  TransactionList(this._transaction,this.deleteTx);
+  TransactionList(this._transaction, this.deleteTx);
 
   @override
   State<TransactionList> createState() => _TransactionListState();
@@ -16,55 +16,62 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return widget._transaction.isEmpty
-        ? Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 10, top: 10),
-                width: double.infinity,
-                height: 210,
-                child: Image.asset(
-                  'assets/images/Transaction.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Text(
-                'No transaction is added yet.Please add by pressing + icon below.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline1,
-              ),
-            ],
-          )
-        : Column(
-            children: widget._transaction.map((tx) {
-              return Card(
-                elevation: 10,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Text(
-                      '\$${tx.amount}',
-                      style: Theme.of(context).textTheme.button,
-                    ),
+        ? LayoutBuilder(builder: (context, constraints) {
+            return Column(
+              children: [
+                Container(
+                  // margin: EdgeInsets.only(bottom: 10, top: 10),
+                  width: double.infinity,
+                  height: constraints.maxHeight * 0.75,
+                  child: Image.asset(
+                    'assets/images/Transaction.jpg',
+                    fit: BoxFit.cover,
                   ),
-                  title: Text(
-                    tx.title,
+                ),
+                Container(
+                  height: constraints.maxHeight * 0.2,
+                  child: Text(
+                    'No transaction is added yet.Please add by pressing + icon below.',
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline1,
                   ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(tx.date).toString(),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      widget.deleteTx(tx.id);
-                    },
-                  ),
                 ),
-              );
-            }).toList(),
+              ],
+            );
+          })
+        : SingleChildScrollView(
+            child: Column(
+              children: widget._transaction.map((tx) {
+                return Card(
+                  elevation: 10,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Text(
+                        '\$${tx.amount}',
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                    ),
+                    title: Text(
+                      tx.title,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(tx.date).toString(),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        widget.deleteTx(tx.id);
+                      },
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           );
   }
 }
