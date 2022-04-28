@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -40,14 +41,15 @@ class _NewTransactionState extends State<NewTransaction> {
           children: [
             TextField(
               decoration: InputDecoration(
-                labelText: 'Title',
+                labelText: 'Name of goods',
               ),
               style: Theme.of(context).textTheme.headline2,
               controller: titleController,
             ),
             TextField(
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Amount',
+                labelText: 'Amount of money spent in \$',
               ),
               style: Theme.of(context).textTheme.headline2,
               controller: amountController,

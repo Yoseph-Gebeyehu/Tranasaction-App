@@ -2,32 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '/transaction.dart';
 
-class Chart extends StatefulWidget {
-  // const Chart({ Key? key }) : super(key: key);
+class Chart extends StatelessWidget{
   final List<Transaction> _recentTransaction;
   Chart(this._recentTransaction);
-
-  @override
-  State<Chart> createState() => _ChartState();
-}
-
-class _ChartState extends State<Chart> {
   List<Map<String, Object>> get getList {
     return List.generate(7, (index) {
       DateTime dayOfWeek = DateTime.now().subtract(Duration(days: index));
       double amount = 0;
-      for (int i = 0; i < widget._recentTransaction.length; i++) {
-        if (widget._recentTransaction[i].date.day == dayOfWeek.day &&
-            widget._recentTransaction[i].date.month == dayOfWeek.month &&
-            widget._recentTransaction[i].date.year == dayOfWeek.year) {
-          setState(() {
-            amount += widget._recentTransaction[i].amount;
-          });
+      for (int i = 0; i < _recentTransaction.length; i++) {
+        if (_recentTransaction[i].date.day == dayOfWeek.day &&
+            _recentTransaction[i].date.month == dayOfWeek.month &&
+            _recentTransaction[i].date.year == dayOfWeek.year) {
+          amount += _recentTransaction[i].amount;
         }
       }
       ;
       return {'day': DateFormat.E().format(dayOfWeek), 'amount': amount};
-    });
+    }).reversed.toList();
   }
 
   @override

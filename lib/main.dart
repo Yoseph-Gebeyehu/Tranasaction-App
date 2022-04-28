@@ -125,7 +125,7 @@ class _AppState extends State<App> {
                   appBarHeight -
                   MediaQuery.of(context).padding.top) *
               0.2,
-          width: double.infinity,
+          // width: double.infinity,
           child: Chart(_transaction),
         ),
         Container(
@@ -166,7 +166,7 @@ class _AppState extends State<App> {
                 height: (mediaQueryHeight -
                         appBarHeight -
                         MediaQuery.of(context).padding.top) *
-                    0.8,
+                    0.5,
                 width: double.infinity,
                 child: Chart(_transaction),
               )
