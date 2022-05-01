@@ -46,7 +46,7 @@ class Chart extends StatelessWidget{
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ),
-                SizedBox(
+                 SizedBox(
                   height: constraints.maxHeight * 0.5,
                 ),
                 Container(

@@ -21,27 +21,27 @@ class AppHomePage extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
-          headline1: TextStyle(
+          headline1: const TextStyle(
             fontFamily: 'QuickSand',
             fontSize: 20,
             color: Colors.black,
           ),
-          headline2: TextStyle(
+          headline2: const TextStyle(
             fontFamily: 'QuickSand',
             fontSize: 18,
             color: Colors.blue,
           ),
-          button: TextStyle(
+          button: const TextStyle(
             fontFamily: 'QuickSand',
             fontSize: 18,
             color: Colors.white,
           ),
-          headline4: TextStyle(
+          headline4: const TextStyle(
             fontFamily: 'QuickSand',
             fontSize: 16,
             color: Colors.black,
           ),
-          headline5: TextStyle(
+          headline5: const TextStyle(
             fontFamily: 'QuickSand',
             fontSize: 16,
             color: Colors.blue,
@@ -107,7 +107,7 @@ class _AppState extends State<App> {
           onPressed: () {
             startAddingNewTransaction();
           },
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
         ),
       ],
       title: Center(
@@ -191,7 +191,7 @@ class _AppState extends State<App> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        child: IconButton(
+        child: const IconButton(
           icon: Icon(
             Icons.add,
             color: Colors.white,
