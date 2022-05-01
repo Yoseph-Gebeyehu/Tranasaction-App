@@ -95,53 +95,12 @@ class _AppState extends State<App> {
 
   bool _showChart = false;
 
-  @override
-  Widget build(BuildContext context) {
-    final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    final landscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
-    final mediaQueryHeight = MediaQuery.of(context).size.height;
-    final AppBar appBar = AppBar(
-      actions: [
-        IconButton(
-          onPressed: () {
-            startAddingNewTransaction();
-          },
-          icon: const Icon(Icons.add),
-        ),
-      ],
-      title: Center(
-        child: Text(
-          'Personal Expenses',
-          style: Theme.of(context).appBarTheme.textTheme.headline1,
-        ),
-      ),
-    );
-    final appBarHeight = appBar.preferredSize.height;
-    final portraitView = Column(
+  Widget _landscape(MediaQueryData mediaQuery, AppBar appBarHeight) {
+    return Column(
       children: [
         Container(
-          height: (mediaQueryHeight -
-                  appBarHeight -
-                  MediaQuery.of(context).padding.top) *
-              0.2,
-          // width: double.infinity,
-          child: Chart(_transaction),
-        ),
-        Container(
-          height: (mediaQueryHeight -
-                  appBarHeight -
-                  MediaQuery.of(context).padding.top) *
-              0.7,
-          child: TransactionList(_transaction, deleteTx),
-        ),
-      ],
-    );
-    final landscapeView = Column(
-      children: [
-        Container(
-          height: (mediaQueryHeight -
-                  appBarHeight -
+          height: (MediaQuery.of(context).size.height -
+                  appBarHeight.preferredSize.height -
                   MediaQuery.of(context).padding.top) *
               0.2,
           child: Row(
@@ -163,29 +122,76 @@ class _AppState extends State<App> {
         ),
         _showChart
             ? Container(
-                height: (mediaQueryHeight -
-                        appBarHeight -
+                height: (MediaQuery.of(context).size.height -
+                        appBarHeight.preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.5,
                 width: double.infinity,
                 child: Chart(_transaction),
               )
             : Container(
-                height: (mediaQueryHeight -
-                        appBarHeight -
+                height: (MediaQuery.of(context).size.height -
+                        appBarHeight.preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.8,
                 child: TransactionList(_transaction, deleteTx),
               ),
       ],
     );
+  }
+
+  Widget _portrait(MediaQueryData mediaQueryHeight, AppBar appBarHeight) {
+    return Column(
+      children: [
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBarHeight.preferredSize.height -
+                  MediaQuery.of(context).padding.top) *
+              0.2,
+          // width: double.infinity,
+          child: Chart(_transaction),
+        ),
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBarHeight.preferredSize.height -
+                  MediaQuery.of(context).padding.top) *
+              0.7,
+          child: TransactionList(_transaction, deleteTx),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final landscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQueryHeight = MediaQuery.of(context);
+    final AppBar appBar = AppBar(
+      actions: [
+        IconButton(
+          onPressed: () {
+            startAddingNewTransaction();
+          },
+          icon: const Icon(Icons.add),
+        ),
+      ],
+      title: Center(
+        child: Text(
+          'Personal Expenses',
+          style: Theme.of(context).appBarTheme.textTheme.headline1,
+        ),
+      ),
+    );
+    final appBarHeight = appBar.preferredSize.height;
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            if (landscape) landscapeView,
-            if (portrait) portraitView,
+            if (landscape) _landscape(mediaQueryHeight, appBar),
+            if (portrait) _portrait(mediaQueryHeight, appBar),
           ],
         ),
       ),
